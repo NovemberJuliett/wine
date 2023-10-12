@@ -22,6 +22,7 @@ for wine in internal_dict:
 
 second_excel_file = pandas.read_excel('wine2.xlsx')
 second_file_dict = second_excel_file.to_dict()
+print(second_file_dict)
 second_file_keys = list(second_file_dict.keys())
 second_file_values = list(second_file_dict.values())
 # print(second_file_keys)
@@ -32,8 +33,18 @@ print(category_values)
 new_dict = {}
 for key in category_values:
     value = category_values[key]
-    new_dict[value] = []
+    item_numbers = new_dict.get(value)
+    if item_numbers is not None:
+        item_numbers.append(key)
+    else:
+        new_dict[value] = [key]
 print(new_dict)
+zzz_key = new_dict.get("zzz")
+print(zzz_key)
+drinks = new_dict.get('Напитки')
+print(drinks)
+print(type(drinks))
+
 
 env = Environment(
     loader=FileSystemLoader('.'),
