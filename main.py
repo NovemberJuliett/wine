@@ -7,6 +7,7 @@ from pprint import pprint
 first_excel_file = pandas.read_excel('wine.xlsx')
 wine_dictionary = first_excel_file.to_dict()
 
+
 dict_list = list(wine_dictionary.values())
 internal_dict = dict_list[0]
 wines_list = []
@@ -17,28 +18,20 @@ for wine in internal_dict:
         null_value = dict_value[wine]
         result[key] = null_value
     wines_list.append(result)
-# print(wines_list)
 
 
-second_excel_file = pandas.read_excel('wine2.xlsx')
-second_file_dict = second_excel_file.to_dict()
-second_file_keys = list(second_file_dict.keys())
-second_file_values = list(second_file_dict.values())
-# print(second_file_keys)
-# print(second_file_values)
+second_excel_file = pandas.read_excel('wine2.xlsx', keep_default_na=False)
+second_file_dict = second_excel_file.to_dict(orient='records')
 
-category_values = second_file_values[0]
-print(category_values)
-result = {}
-for key in category_values:
-    category = category_values[key]
-    item_numbers = result.get(category)
+category_dict = {}
+for key in second_file_dict:
+    category = key['Категория']
+    item_numbers = category_dict.get(category)
     if item_numbers is not None:
         item_numbers.append(key)
     else:
-        result[category] = [key]
-print(result)
-
+        category_dict[category] = [key]
+pprint(category_dict)
 
 
 env = Environment(
