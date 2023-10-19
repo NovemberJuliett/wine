@@ -3,34 +3,31 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import datetime
 import pandas
 from pprint import pprint
+import collections
 
-first_excel_file = pandas.read_excel('wine.xlsx')
-wine_dictionary = first_excel_file.to_dict()
-
-
-dict_list = list(wine_dictionary.values())
-internal_dict = dict_list[0]
-wines_list = []
-for wine in internal_dict:
-    result = {}
-    for key in wine_dictionary:
-        dict_value = wine_dictionary[key]
-        null_value = dict_value[wine]
-        result[key] = null_value
-    wines_list.append(result)
+# first_excel_file = pandas.read_excel('wine.xlsx')
+# wine_dictionary = first_excel_file.to_dict()
+#
+#
+# dict_list = list(wine_dictionary.values())
+# internal_dict = dict_list[0]
+# wines_list = []
+# for wine in internal_dict:
+#     result = {}
+#     for key in wine_dictionary:
+#         dict_value = wine_dictionary[key]
+#         null_value = dict_value[wine]
+#         result[key] = null_value
+#     wines_list.append(result)
 
 
 second_excel_file = pandas.read_excel('wine2.xlsx', keep_default_na=False)
 second_file_dict = second_excel_file.to_dict(orient='records')
 
-category_dict = {}
+category_dict = collections.defaultdict(list)
 for key in second_file_dict:
     category = key['Категория']
-    item_numbers = category_dict.get(category)
-    if item_numbers is not None:
-        item_numbers.append(key)
-    else:
-        category_dict[category] = [key]
+    category_dict[category].append(key)
 pprint(category_dict)
 
 
@@ -62,7 +59,7 @@ def year_case():
 rendered_page = template.render(
     year=delta,
     case=year_case(),
-    wines=wines_list)
+    wines=category_dict)
 
 with open('index.html', 'w', encoding="utf8") as file:
     file.write(rendered_page)
