@@ -28,7 +28,7 @@ category_dict = collections.defaultdict(list)
 for key in second_file_dict:
     category = key['Категория']
     category_dict[category].append(key)
-pprint(category_dict)
+print(category_dict)
 
 
 env = Environment(
