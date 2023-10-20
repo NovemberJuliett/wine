@@ -118,21 +118,21 @@
       <div class="row">
         <div class="col-12 section-title text-center mb-5">
           <h2 class="d-block">{{wine}}</h2>
-          <div class="col-lg-4 mb-5 col-md-6">
-            {% for item in wines[wine] %}
-            <div class="wine_v_1 text-center pb-4 pt-5">
-              <img src="images/{{item['Картинка']}}" alt="Image" class="img-fluid">
-              <div>
-                <h3 class="heading mt-3 mb-3 text-dark">{{item['Название']}}</h3>
-                <p>
-                  Сорт винограда - {{item['Сорт']}}<br/>
-                  <span class="price">{{item['Цена']}}</span>
-                </p>
-              </div>
+        </div>
+        {% for item in wines[wine] %}
+        <div class="col-lg-4 mb-5 col-md-6">
+          <div class="wine_v_1 text-center pb-4 pt-5">
+            <img src="images/{{item['Картинка']}}" alt="Image" class="img-fluid">
+            <div>
+              <h3 class="heading mt-3 mb-3 text-dark">{{item['Название']}}</h3>
+              <p>
+                Сорт винограда - {{item['Сорт']}}<br/>
+                <span class="price">{{item['Цена']}}</span>
+              </p>
             </div>
-            {% endfor %}
           </div>
         </div>
+        {% endfor %}
       </div>
       {% endfor %}
     <div class="hero-2" style="background-image: url('assets/hero_2.jpg');">
