@@ -114,25 +114,25 @@
           </div>
         </div>
 
-      {% for wine in wines %}
+      {% for wine_category in wines %}
       <div class="row">
         <div class="col-12 section-title text-center mb-5">
-          <h2 class="d-block">{{wine}}</h2>
+          <h2 class="d-block">{{wine_category}}</h2>
         </div>
-        {% for item in wines[wine] %}
+        {% for wine_feature in wines[wine_category] %}
         <div class="col-lg-4 mb-5 col-md-6">
           <div class="wine_v_1 text-center pb-4 pt-5">
-            <img src="images/{{item['Картинка']}}" alt="Image" class="img-fluid">
-            {% if item['Акция']%}
+            <img src="images/{{wine_feature['Картинка']}}" alt="Image" class="img-fluid">
+            {% if wine_feature['Акция']%}
             <img src="assets/profitable.png" style="width:10rem;height: 10rem;position:absolute;right: -20px;top: -20px;">
             {% endif %}
             <div>
-              <h3 class="heading mt-3 mb-3 text-dark">{{item['Название']}}</h3>
+              <h3 class="heading mt-3 mb-3 text-dark">{{wine_feature['Название']}}</h3>
               <p>
-                {% if item['Сорт']%}
-                Сорт винограда - {{item['Сорт']}}<br/>
+                {% if wine_feature['Сорт']%}
+                Сорт винограда - {{wine_feature['Сорт']}}<br/>
                 {% endif %}
-                <span class="price">{{item['Цена']}}</span>
+                <span class="price">{{wine_feature['Цена']}}</span>
               </p>
             </div>
           </div>

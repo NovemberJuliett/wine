@@ -2,52 +2,51 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import datetime
 import pandas
-from pprint import pprint
 import collections
 
 
-excel_file = pandas.read_excel('wine3.xlsx', keep_default_na=False)
-excel_file_dict = excel_file.to_dict(orient='records')
-
-category_dict = collections.defaultdict(list)
-for key in excel_file_dict:
-    category = key['Категория']
-    category_dict[category].append(key)
-pprint(category_dict)
-
-
-env = Environment(
-    loader=FileSystemLoader('.'),
-    autoescape=select_autoescape(['html', 'xml'])
-)
-
-template = env.get_template('template.html')
-
-now = datetime.datetime.now()
-
-event1 = datetime.datetime(year=now.year, month=now.month, day=now.day)
-event2 = datetime.datetime(year=1920, month=1, day=1)
-
-delta = event1.year-event2.year
-
-
-def year_case():
-    age = delta
+def incline_years(age):
     if (age % 10 == 1) and (age != 11) and (age % 100 != 11):
         return "год"
-    elif (age % 10 > 1) and (age % 10 < 5) and (age != 12) and (age != 13) and (age != 14):
+    elif (age % 10 > 1) and (age % 10 < 5):
         return "года"
+    elif (age % 100 == 12) and (age % 100 == 13) and (age % 100 == 14):
+        return "лет"
     else:
         return "лет"
 
 
-rendered_page = template.render(
-    year=delta,
-    case=year_case(),
-    wines=category_dict)
+def main():
+    excel_file = pandas.read_excel('wine3.xlsx', keep_default_na=False)
+    excel_file_dict = excel_file.to_dict(orient='records')
 
-with open('index.html', 'w', encoding="utf8") as file:
-    file.write(rendered_page)
+    category_dict = collections.defaultdict(list)
+    for column_name in excel_file_dict:
+        category = column_name['Категория']
+        category_dict[category].append(column_name)
 
-server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
-server.serve_forever()
+    env = Environment(
+        loader=FileSystemLoader('.'),
+        autoescape=select_autoescape(['html', 'xml'])
+    )
+
+    template = env.get_template('template.html')
+
+    now = datetime.datetime.now()
+    event1 = datetime.datetime(year=now.year, month=now.month, day=now.day)
+    event2 = datetime.datetime(year=1920, month=1, day=1)
+    delta = event1.year - event2.year
+
+    rendered_page = template.render(
+        year=delta,
+        case=incline_years(delta),
+        wines=category_dict)
+
+    with open('index.html', 'w', encoding="utf8") as file:
+        file.write(rendered_page)
+    server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
+    server.serve_forever()
+
+
+if __name__ == '__main__':
+    main()
