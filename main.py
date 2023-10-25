@@ -3,21 +3,24 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import datetime
 import pandas
 import collections
+import argparse
 
 
 def incline_years(age):
     if (age % 10 == 1) and (age != 11) and (age % 100 != 11):
         return "год"
-    elif (age % 10 > 1) and (age % 10 < 5):
+    if (age % 100 > 10) and (age % 100 < 20):
+        return "лет"
+    if (age % 10 > 1) and (age % 10 < 5):
         return "года"
-    elif (age % 100 == 12) and (age % 100 == 13) and (age % 100 == 14):
-        return "лет"
-    else:
-        return "лет"
 
 
 def main():
-    excel_file = pandas.read_excel('wine3.xlsx', keep_default_na=False)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("file_path", help="Путь до файла")
+    args = parser.parse_args()
+    file_path = args.file_path
+    excel_file = pandas.read_excel(file_path, keep_default_na=False)
     excel_file_dict = excel_file.to_dict(orient='records')
 
     category_dict = collections.defaultdict(list)
