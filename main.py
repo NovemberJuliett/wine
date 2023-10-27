@@ -14,6 +14,8 @@ def incline_years(age):
     if (age % 10 > 1) and (age % 10 < 5):
         return "года"
 
+    return "лет"
+
 
 def main():
     parser = argparse.ArgumentParser()
