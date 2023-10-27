@@ -7,7 +7,7 @@
 - Скачайте код
 - Установите пакеты командой
 
-```pip install -r requirements.txt```
+    ```pip install -r requirements.txt```
 
 - Введите команду ```python3 main.py``` и после неё укажите путь до файла в формате xls или xlsx. Например:
 
