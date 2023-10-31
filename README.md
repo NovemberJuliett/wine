@@ -11,7 +11,8 @@
 pip install -r requirements.txt
 ```
 
-- Введите команду ```python3 main.py``` и после неё укажите путь до файла в формате xls или xlsx. Например:
+- Введите команду ```python3 main.py``` и после неё укажите путь до файла в формате xls или xlsx.
+- Файл **wine3.xlsx**, который можно использовать для тестирования программы, лежит в директории **NovemberJuliett/wine**.
 
 ```
 python3 main.py C:\Users\User\PycharmProjects\wine.xlsx
